@@ -1,0 +1,45 @@
+{
+  "name": "e-generatio",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Johnny Moreira",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "start": "tsx src/index.ts",
+    "dev": "tsx watch src/index.ts",
+    "build": "tsup src",
+    "prod": "node dist/index.js",
+    "test": "APP_STAGE=test vitest --coverage --silent",
+    "test:debug": "APP_STAGE=test vitest --coverage"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/helmet": "^4.0.0",
+    "@types/node": "^20.17.6",
+    "@types/supertest": "^2.0.16",
+    "@types/winston": "^2.4.4",
+    "@typescript-eslint/eslint-plugin": "^6.4.1",
+    "@typescript-eslint/parser": "^6.4.1",
+    "@vitest/coverage-v8": "^0.34.3",
+    "eslint": "^8.0.1",
+    "eslint-config-standard-with-typescript": "^38.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
+    "eslint-plugin-promise": "^6.0.0",
+    "supertest": "^6.3.4",
+    "tsup": "^7.2.0",
+    "tsx": "^3.12.7",
+    "typescript": "*",
+    "vite-tsconfig-paths": "^5.1.3",
+    "vitest": "^0.34.3"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "helmet": "^7.2.0",
+    "zod": "^3.23.8"
+  }
+}
