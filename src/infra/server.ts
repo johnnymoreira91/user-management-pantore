@@ -9,8 +9,6 @@ app.use(json());
 app.use(helmet());
 app.use(cors());
 
-let server;
-
 const shutdown = (signal: string) => {
   return (err?: Error) => {
     if (err) Logger.error(`Erro recebido: ${err.message}`, err);

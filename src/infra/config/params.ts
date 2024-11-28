@@ -4,7 +4,11 @@ dotenv.config();
 
 const envSchema = z.object({
   PORT: z.string().default("3001"),
-  NODE_ENV: z.enum(["dev", "test", "local", "prod"]).default("dev")
+  NODE_ENV: z.enum(["dev", "test", "local", "prod"]),
+  DATABASE_USERNAME: z.string(),
+  DATABASE_PASSWORD: z.string(),
+  DATABASE_NAME: z.string(),
+  DATABASE_HOST: z.string()
 });
 
 export const ENV = envSchema.parse(process.env);

@@ -19,6 +19,7 @@
         "no-useless-constructor": "off",
         "camelcase": "off",
         "semi": ["error", "always"],
-        "quotes": ["error", "double"]
+        "quotes": ["error", "double"],
+        "no-use-before-define": "off",
     }
 }
