@@ -1,4 +1,5 @@
 import { DataTypes, Model, NonAttribute, Sequelize, literal } from "sequelize";
+// import bcrypt from 'bcrypt';
 import { Role } from "./roles";
 
 interface UserAttributes {
@@ -87,6 +88,16 @@ class User extends Model<UserAttributes, UserCreationAttributes> {
       as: 'Role'
     })
   }
+
+  // public async encryptPassword(): Promise<void> {
+  //   const saltRounds = 10;
+  //   this.password = await bcrypt.hash(this.password, saltRounds);
+  //   await this.save()
+  // }
+
+  // public async isPasswordValid(providedPassword: string): Promise<boolean> {
+  //   return bcrypt.compare(providedPassword, this.password);
+  // }
 }
 
 export {

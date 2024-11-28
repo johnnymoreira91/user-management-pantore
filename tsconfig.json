@@ -3,7 +3,10 @@
     "esModuleInterop": true,
     "baseUrl": ".",
     "paths": {
-      "@infra/*": ["./src/infra/*"]
+      "@infra/*": ["./src/infra/*"],
+      "@domain/*": ["./src/domain/*"],
+      "@useCase/*": ["./src/useCase/*"],
+      "@utils/*": ["./src/utils/*"]
     }
   }
 }
