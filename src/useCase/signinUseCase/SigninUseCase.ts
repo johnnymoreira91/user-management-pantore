@@ -6,6 +6,7 @@ import { ISigninReturn } from "@domain/useCase/signinUseCase/ISigninReturn";
 import { ISigninUseCase } from "@domain/useCase/signinUseCase/ISigninUseCase";
 import { BadRequestError } from "@utils/errors/BadRequestError";
 import { NotFoundError } from "@utils/errors/NotFoundError";
+import { Transaction } from "sequelize";
 
 export class SigninUseCase implements ISigninUseCase {
   constructor(
@@ -13,14 +14,15 @@ export class SigninUseCase implements ISigninUseCase {
     private hashService: IHashService,
     private readonly tokenService: ITokenService
   ) {}
-  async execute(data: ISigninRequestDTO): Promise<ISigninReturn> {
-    const user = await this.userRepository.findByEmail(data.email);
+  async execute(data: ISigninRequestDTO, transaction?: Transaction): Promise<ISigninReturn> {
+    const user = await this.userRepository.findByEmail(data.email, transaction);
 
     if (!user) {
       throw new NotFoundError('User not found / Wrong password');
     }
 
     const isPasswordValid = await this.hashService.isPasswordValid(data.password, user.password);
+    console.log(isPasswordValid, 'isPasswordValid')
     if (!isPasswordValid) {
       throw new BadRequestError('User not found / Wrong password');
     }
@@ -32,6 +34,8 @@ export class SigninUseCase implements ISigninUseCase {
       roleId: user.roleId
      });
 
+     console.log(token)
+
      return {
       accessToken: token,
       user: {
@@ -41,6 +45,5 @@ export class SigninUseCase implements ISigninUseCase {
         roleId: user.roleId
       }
      }
-
   }
 }

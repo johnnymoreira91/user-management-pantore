@@ -15,18 +15,18 @@ describe('Create user use case', () => {
   describe('When user is created', () => {
     it('should return the user created', async() => {
       const response = await superagent(app)
-      .post('/users')
+      .post('/auth/signup')
       .send({
         name: 'Leia',
         email: 'leia.organa@senate.com',
-        password: '123456',
+        password: '@SecurePassword123',
         roleId: 1
       })
       expect(response.status).toBe(201);
     })
     it('Should return 409 when user already exists', async() => {
       const response = await superagent(app)
-      .post('/users')
+      .post('/auth/signup')
       .send({
         id: 1,
         name: 'Luke Skywalker',
@@ -35,6 +35,18 @@ describe('Create user use case', () => {
         roleId: 2
       })
       expect(response.status).toBe(409);
+    });
+    it('Should return 400 when has a weak password', async() => {
+      const response = await superagent(app)
+      .post('/auth/signup')
+      .send({
+        id: 1,
+        name: 'r2d2',
+        email: 'r2d2@robot.org',
+        password: 'test',
+        roleId: 2
+      })
+      expect(response.status).toBe(400);
     });
   })
 });
