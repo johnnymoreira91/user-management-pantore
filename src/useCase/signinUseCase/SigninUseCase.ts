@@ -22,7 +22,6 @@ export class SigninUseCase implements ISigninUseCase {
     }
 
     const isPasswordValid = await this.hashService.isPasswordValid(data.password, user.password);
-    console.log(isPasswordValid, 'isPasswordValid')
     if (!isPasswordValid) {
       throw new BadRequestError('User not found / Wrong password');
     }
@@ -33,8 +32,6 @@ export class SigninUseCase implements ISigninUseCase {
       name: user.name,
       roleId: user.roleId
      });
-
-     console.log(token)
 
      return {
       accessToken: token,

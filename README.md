@@ -8,10 +8,10 @@
 - [x] Criar Repository de User
   - [x] Implementar métodos de busca
   - [ ] Implementar métodos de atualização
-- [ ] Criar UseCase para registrar usuário
-  - [ ] Definir um password criptografado
-- [ ] Criar UseCase para logar o usuário
-  - [ ] Acesso com email e senha
+- [X] Criar UseCase para registrar usuário
+  - [X] Definir um password criptografado
+- [X] Criar UseCase para logar o usuário
+  - [X] Acesso com email e senha
   - [ ] Garantir validações de segurança
   - [ ] Criar middleware para verificar o token
 - [ ] Criar UseCase para editar usuário

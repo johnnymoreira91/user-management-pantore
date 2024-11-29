@@ -5,7 +5,6 @@ export default defineConfig({
   plugins: [tsconfigPaths()],
   root: "./src",
   test: {
-    // include: ['src/**/__tests__/**/*.spec.ts'],
     exclude: [
       ...configDefaults.exclude,
       "coverage/**",
@@ -18,7 +17,7 @@ export default defineConfig({
         "**/*.spec.ts",
         "infra/database/**",
         "libs/**"
-      ]
+      ],
     }
   }
 });
