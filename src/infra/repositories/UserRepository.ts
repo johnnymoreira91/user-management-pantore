@@ -10,9 +10,11 @@ export class UserRepository implements IUserRepository {
     } });
   }
   async findByEmail(email: string): Promise<User | null> {
+    console.log('respository', email)
     return await User.findOne({ where: { email } });
   }
   async create(user: CreationAttributes<User>): Promise<User> {
+    console.log('user create', user)
     return await User.create(user);
   }
 }

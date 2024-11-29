@@ -2,12 +2,15 @@ import express, { Application, json } from "express";
 import helmet from "helmet";
 import cors from "cors";
 import Logger from "@infra/service/logger/winston";
+import userRoute from './routes/userRoute';
 
 const app: Application = express();
 
 app.use(json());
 app.use(helmet());
 app.use(cors());
+
+app.use('/users', userRoute);
 
 const shutdown = (signal: string) => {
   return (err?: Error) => {
