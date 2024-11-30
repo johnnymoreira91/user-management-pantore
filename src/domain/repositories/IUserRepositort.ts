@@ -16,4 +16,5 @@ export interface IUserRepository {
   findById(id: number, transaction?: Transaction): Promise<UserWithRole | null>;
   findByEmail(email: string, transaction?: Transaction): Promise<User | null>;
   create(user: CreationAttributes<User>, transaction?: Transaction): Promise<User>;
+  update(user: User, changes: CreationAttributes<User> ,transaction?: Transaction): Promise<User>;
 }

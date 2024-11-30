@@ -4,6 +4,11 @@ import { Role, User } from "@infra/database/models";
 import { CreationAttributes, Op, Transaction, WhereOptions } from "sequelize";
 
 export class UserRepository implements IUserRepository {
+  async update(user: User, changes: CreationAttributes<User>, transaction?: Transaction): Promise<User> {
+    Object.assign(user, changes);
+    return await user.save({ transaction });
+  }
+
   async findAll(
     filters: FindAllUsersParams,
     transaction?: Transaction
