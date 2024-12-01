@@ -13,11 +13,11 @@ export class ListUserController implements IListUserController {
     private readonly transactionManager: ITransactionManager
   ) {}
 
-  async handle(req: Request<{}, IListUserRequestDTO, {}>, res: Response): Promise<Response> {
+  async handle(req: Request<{}, {}, {}, IListUserRequestDTO>, res: Response): Promise<Response> {
     const transaction = await this.transactionManager.startTransaction()
+    const data = req.query
     try {
-
-      const response = await this.listUserUseCase.execute({ ...req.query}, transaction)
+      const response = await this.listUserUseCase.execute({ ...data}, req.userId, req.roleId, transaction)
       await this.transactionManager.commitTransaction(transaction)
       return res.status(200).json(response)
     } catch (error) {

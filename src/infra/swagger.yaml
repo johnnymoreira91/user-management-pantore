@@ -1,0 +1,385 @@
+openapi: 3.0.0
+info:
+  title: API Pantore Documentation
+  version: 1.0.0
+  description: Documentação da API com Swagger
+servers:
+  - url: http://localhost:3001
+    description: Servidor local
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - bearerAuth: []
+paths:
+  /users:
+    get:
+      summary: Lista todos os usuários
+      tags:
+        - Users
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: name
+          schema:
+            type: string
+          description: Nome do usuário para filtrar
+        - in: query
+          name: roleId
+          schema:
+            type: integer
+          description: ID do papel (role) para filtrar
+        - in: query
+          name: email
+          schema:
+            type: string
+          description: Email do usuário para filtrar
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            example: 10
+          description: Número máximo de resultados por página
+        - in: query
+          name: offset
+          schema:
+            type: integer
+            example: 0
+          description: Deslocamento para paginação
+      responses:
+        '200':
+          description: Lista de usuários
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                          description: ID do usuário
+                        name:
+                          type: string
+                          description: Nome do usuário
+                        email:
+                          type: string
+                          description: Email do usuário
+                        password:
+                          type: string
+                          description: Senha criptografada do usuário
+                        roleId:
+                          type: number
+                          description: ID do papel (role) associado
+                        createdAt:
+                          type: string
+                          format: date-time
+                          description: Data de criação
+                        updatedAt:
+                          type: string
+                          format: date-time
+                          description: Data de última atualização
+                        deletedAt:
+                          type: string
+                          format: date-time
+                          nullable: true
+                          description: Data de exclusão (nulo se não foi excluído)
+                        Role:
+                          type: object
+                          description: Detalhes do papel (role) associado ao usuário
+                          properties:
+                            id:
+                              type: number
+                              description: ID do papel (role)
+                            name:
+                              type: string
+                              description: Nome do papel (role)
+                            createdAt:
+                              type: string
+                              format: date-time
+                              description: Data de criação do papel
+                            updatedAt:
+                              type: string
+                              format: date-time
+                              description: Data de última atualização do papel
+                            deletedAt:
+                              type: string
+                              format: date-time
+                              nullable: true
+                              description: Data de exclusão do papel (nulo se não foi excluído)
+
+  /users/profile:
+    get:
+      summary: Ver Perfil do Usuário
+      tags:
+        - Users
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Perfil do usuário retornado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                    description: ID do usuário
+                  name:
+                    type: string
+                    description: Nome do usuário
+                  email:
+                    type: string
+                    description: Email do usuário
+                  password:
+                    type: string
+                    description: Senha criptografada do usuário
+                  roleId:
+                    type: number
+                    description: ID do papel (role) associado
+                  createdAt:
+                    type: string
+                    format: date-time
+                    description: Data de criação
+                  updatedAt:
+                    type: string
+                    format: date-time
+                    description: Data de última atualização
+                  deletedAt:
+                    type: string
+                    format: date-time
+                    nullable: true
+                    description: Data de exclusão (nulo se não foi excluído)
+                  Role:
+                    type: object
+                    description: Detalhes do papel (role) associado ao usuário
+                    properties:
+                      id:
+                        type: number
+                        description: ID do papel (role)
+                      name:
+                        type: string
+                        description: Nome do papel (role)
+                      createdAt:
+                        type: string
+                        format: date-time
+                        description: Data de criação do papel
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        description: Data de última atualização do papel
+                      deletedAt:
+                        type: string
+                        format: date-time
+                        nullable: true
+                        description: Data de exclusão do papel (nulo se não foi excluído)
+        '401':
+          description: Token inválido ou ausente
+        '403':
+          description: Permissão negada para visualizar o perfil
+        '404':
+          description: Usuário não encontrado
+
+  /users/{id}:
+    patch:
+      summary: Atualiza um usuário existente
+      tags:
+        - Users
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID do usuário a ser atualizado
+        - in: body
+          name: user
+          required: true
+          description: Dados do usuário para atualização
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Nome do usuário
+              email:
+                type: string
+                description: Email do usuário
+              password:
+                type: string
+                description: Senha do usuário
+              roleId:
+                type: integer
+                description: ID do papel (role) do usuário
+      responses:
+        '200':
+          description: Usuário atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                    description: ID do usuário
+                  name:
+                    type: string
+                    description: Nome do usuário
+                  email:
+                    type: string
+                    description: Email do usuário
+                  password:
+                    type: string
+                    description: Senha criptografada do usuário
+                  roleId:
+                    type: number
+                    description: ID do papel (role) associado
+                  createdAt:
+                    type: string
+                    format: date-time
+                    description: Data de criação
+                  updatedAt:
+                    type: string
+                    format: date-time
+                    description: Data de última atualização
+                  deletedAt:
+                    type: string
+                    format: date-time
+                    nullable: true
+                    description: Data de exclusão (nulo se não foi excluído)
+                  Role:
+                    type: object
+                    description: Detalhes do papel (role) associado ao usuário
+                    properties:
+                      id:
+                        type: number
+                        description: ID do papel (role)
+                      name:
+                        type: string
+                        description: Nome do papel (role)
+                      createdAt:
+                        type: string
+                        format: date-time
+                        description: Data de criação do papel
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        description: Data de última atualização do papel
+                      deletedAt:
+                        type: string
+                        format: date-time
+                        nullable: true
+                        description: Data de exclusão do papel (nulo se não foi excluído)
+        '401':
+          description: Token inválido ou ausente
+        '404':
+          description: Usuário não encontrado
+        '400':
+          description: Dados inválidos
+
+  /auth/signup:
+    post:
+      summary: Criação de um novo usuário
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: Email do usuário
+                  example: "johnny111@test.com"
+                password:
+                  type: string
+                  description: Senha do usuário
+                  example: "@SecurePassword123"
+                name:
+                  type: string
+                  description: Nome do usuário
+                  example: "johnny"
+                roleId:
+                  type: integer
+                  description: ID do papel (role) do usuário
+                  example: 1
+      responses:
+        '201':
+          description: Usuário criado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                    description: ID do usuário
+                  name:
+                    type: string
+                    description: Nome do usuário
+                  email:
+                    type: string
+                    description: Email do usuário
+                  roleId:
+                    type: integer
+                    description: ID do papel (role) do usuário
+                  createdAt:
+                    type: string
+                    format: date-time
+                    description: Data de criação
+                  updatedAt:
+                    type: string
+                    format: date-time
+                    description: Data de última atualização
+        '400':
+          description: Dados inválidos
+        '409':
+          description: Conflito (ex: email já registrado)
+
+  /auth/signin:
+    post:
+      summary: Login do usuário
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: Email do usuário
+                  example: "test@test.com"
+                password:
+                  type: string
+                  description: Senha do usuário
+                  example: "@SecurePassword123"
+      responses:
+        '200':
+          description: Login bem-sucedido
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: Token JWT para autenticação
+        '400':
+          description: Dados inválidos
+        '404':
+          description: Credenciais inválidas / Não encontradas

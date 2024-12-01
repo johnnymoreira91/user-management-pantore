@@ -1,6 +1,7 @@
 import { IReturnHandler } from "@domain/services/returnHandler/IReturnHandler";
 import { BadRequestError } from "@utils/errors/BadRequestError";
 import { ConflictError } from "@utils/errors/ConflictError";
+import { ForbiddenError } from "@utils/errors/ForbiddenError";
 import { NotFoundError } from "@utils/errors/NotFoundError";
 import { WeakPasswordError } from "@utils/errors/WeakPasswordError";
 import { Response } from "express";
@@ -19,6 +20,9 @@ export class ReturnHandler implements IReturnHandler {
     if (error instanceof WeakPasswordError) {
       return res.status(400).json({ message: error.message });
     }
+    if (error instanceof ForbiddenError) {
+      return res.status(403).json({ message: error.message });
+    } 
 
     return res.status(500).json({ message: error.message || 'Internal server error' });
   }

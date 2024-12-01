@@ -2,6 +2,10 @@ import express, { Application, json } from "express";
 import helmet from "helmet";
 import cors from "cors";
 import Logger from "@infra/service/logger/winston";
+import swaggerUi from 'swagger-ui-express';
+// import swaggerSpec from './swagger.config';
+import YAML from 'yamljs';
+import path from 'path';
 import userRoute from './routes/userRoute';
 import authRoute from './routes/authRoute';
 
@@ -11,8 +15,11 @@ app.use(json());
 app.use(helmet());
 app.use(cors());
 
+const swaggerDocument = YAML.load(path.resolve(__dirname, 'swagger.yaml'));
+
 app.use('/users', userRoute);
 app.use('/auth', authRoute);
+app.use('/api', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const shutdown = (signal: string) => {
   return (err?: Error) => {

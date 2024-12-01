@@ -4,6 +4,7 @@ import { IListUserRequestDTO } from "@domain/useCase/listUserUseCase/IlistUserRe
 import { IListUserUseCase } from "@domain/useCase/listUserUseCase/IListUserUseCase";
 import { User } from "@infra/database/models";
 import Logger from "@infra/service/logger/winston";
+import { ForbiddenError } from "@utils/errors/ForbiddenError";
 import { Transaction } from "sequelize";
 
 export class ListUserUseCase implements IListUserUseCase {
@@ -11,11 +12,13 @@ export class ListUserUseCase implements IListUserUseCase {
     private readonly userRepository: IUserRepository
   ) {}
 
-  async execute(data: IListUserRequestDTO, transaction?: Transaction): Promise<UserWithRole[] | null> {
-    Logger.debug(data)
-    const users = await this.userRepository.findAll(data, transaction);
+  async execute(data: IListUserRequestDTO, userId: number, roleId: number, transaction?: Transaction): Promise<UserWithRole[] | null> {
+    if (roleId === 1) {
+      Logger.info(`User ${userId} is not allowed to list users`);
+      throw new ForbiddenError("User is not allowed to list users");
+    }
 
-    return users;
+    return await this.userRepository.findAll(data, transaction);
   }
 
 }
