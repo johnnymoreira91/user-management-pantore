@@ -20,35 +20,35 @@ describe('List User Use Case', () => {
       await luke.save();
 
       const authResponse = await superagent(app)
-      .post("/auth/signin")
-      .send({ email: "l.skywalker@jedi.org", password: "@SecurePassword123" });
+        .post("/auth/signin")
+        .send({ email: "l.skywalker@jedi.org", password: "@SecurePassword123" });
 
-    const { accessToken } = authResponse.body;
+      const { accessToken } = authResponse.body;
 
-    const userResponse = await superagent(app)
-      .get("/users")
-      .set("Authorization", `Bearer ${accessToken}`);
+      const userResponse = await superagent(app)
+        .get("/users")
+        .set("Authorization", `Bearer ${accessToken}`);
 
-    expect(userResponse.status).toBe(200);
-    expect(Array.isArray(userResponse.body)).toBe(true);
-    expect(userResponse.body.length).toBe(1);
-    expect(userResponse.body[0].name).toBe("Luke Skywalker");
+      expect(userResponse.status).toBe(200);
+      expect(Array.isArray(userResponse.body)).toBe(true);
+      expect(userResponse.body.length).toBe(1);
+      expect(userResponse.body[0].name).toBe("Luke Skywalker");
     });
 
     it('should return permission error', async () => {
       const authResponse = await superagent(app)
-      .post("/auth/signin")
-      .send({ email: "l.skywalker@jedi.org", password: "@SecurePassword123" });
+        .post("/auth/signin")
+        .send({ email: "l.skywalker@jedi.org", password: "@SecurePassword123" });
       console.log(authResponse.body);
 
-    const { accessToken } = authResponse.body;
+      const { accessToken } = authResponse.body;
 
-    const userResponse = await superagent(app)
-      .get("/users")
-      .set("Authorization", `Bearer ${accessToken}`);
+      const userResponse = await superagent(app)
+        .get("/users")
+        .set("Authorization", `Bearer ${accessToken}`);
 
-    expect(userResponse.status).toBe(403);
-    expect(userResponse.body.message).toBe("User is not allowed to list users");
+      expect(userResponse.status).toBe(403);
+      expect(userResponse.body.message).toBe("User is not allowed to list users");
     });
   })
 });
