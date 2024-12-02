@@ -13,7 +13,7 @@ export class ListUserUseCase implements IListUserUseCase {
   ) {}
 
   async execute(data: IListUserRequestDTO, userId: number, roleId: number, transaction?: Transaction): Promise<UserWithRole[] | null> {
-    if (roleId === 1) {
+    if (roleId === 2) {
       Logger.info(`User ${userId} is not allowed to list users`);
       throw new ForbiddenError("User is not allowed to list users");
     }

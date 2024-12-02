@@ -6,10 +6,11 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "start": "tsx src/index.ts",
+    "dev:state": "tsx src/index.ts",
     "dev": "tsx watch src/index.ts",
     "build": "tsup src",
     "prod": "node dist/index.js",
+    "start": "npm run build && npm run prod",
     "test": "APP_STAGE=test vitest --coverage --silent",
     "test:debug": "APP_STAGE=test vitest --coverage",
     "migration:local:up": "NODE_ENV=local MIGRATION=up ts-node ./src/infra/database/migrate.ts",
@@ -60,7 +61,9 @@
     "helmet": "^7.2.0",
     "ip": "^2.0.1",
     "jsonwebtoken": "^9.0.2",
+    "pg": "^8.13.1",
     "sequelize": "^6.37.5",
+    "yaml-loader": "^0.8.1",
     "yamljs": "^0.3.0",
     "zod": "^3.23.8"
   }
